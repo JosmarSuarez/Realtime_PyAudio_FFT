@@ -108,6 +108,7 @@ class Spectrum_Visualizer:
         self.button_height = round(0.05*self.HEIGHT)
         self.history_button  = Button(text="Toggle 2D/3D Mode", right=self.WIDTH, top=0, width=round(0.12*self.WIDTH), height=self.button_height)
         self.slow_bar_button = Button(text="Toggle Slow Bars", right=self.WIDTH, top=self.history_button.height, width=round(0.12*self.WIDTH), height=self.button_height)
+        self.quit_button = Button(text="Quit", right=self.WIDTH, top=self.history_button.height*2, width=round(0.12*self.WIDTH), height=self.button_height)
 
     def stop(self):
         print("Stopping spectrum visualizer...")
@@ -133,6 +134,9 @@ class Spectrum_Visualizer:
             if self.slow_bar_button.click():
                 self.add_slow_bars = not self.add_slow_bars
                 self.slow_features = [0]*self.ear.n_frequency_bins
+            if self.quit_button.click():
+                pygame.quit()
+                sys.exit()
 
         if np.min(self.ear.bin_mean_values) > 0:
             self.frequency_bin_energies = self.avg_energy_height * self.ear.frequency_bin_energies / self.ear.bin_mean_values
@@ -179,6 +183,7 @@ class Spectrum_Visualizer:
 
         self.history_button.draw(self.screen)
         self.slow_bar_button.draw(self.screen)
+        self.quit_button.draw(self.screen)
 
         pygame.display.flip()
 
